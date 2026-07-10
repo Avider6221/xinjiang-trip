@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>鍖楃枂鐜嚎鑷┚娓?路 14鏃ヨ绋?/title>
+<title>北疆环线自驾游 · 14日行程</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -70,129 +70,129 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 <body>
 <div class="app">
 <div class="header">
-<h1>馃彅锔?鍖楃枂鐜嚎鑷┚娓?/h1>
-<div class="sub">2025骞?鏈?5鏃?鈥?8鏈?鏃?路 14澶?3鏅?/div>
+<h1>🏔️ 北疆环线自驾游</h1>
+<div class="sub">2025年7月25日 — 8月7日 · 14天13晚</div>
 <div class="stats">
-<div class="stat"><strong>~3400km</strong>鎬婚噷绋?/div>
-<div class="stat"><strong>12澶?/strong>娓哥帺澶╂暟</div>
-<div class="stat"><strong>13鏅?/strong>浣忓</div>
-<div class="stat"><strong>馃殫</strong>鍏ㄧ▼鑷┚</div>
+<div class="stat"><strong>~3400km</strong>总里程</div>
+<div class="stat"><strong>12天</strong>游玩天数</div>
+<div class="stat"><strong>13晚</strong>住宿</div>
+<div class="stat"><strong>🚗</strong>全程自驾</div>
 </div>
 </div>
-<div class="offline-banner">馃摫 鍑哄彂鍓?<strong>淇濆瓨姝ら〉闈?/strong>锛氭祻瑙堝櫒鑿滃崟 鈫?淇濆瓨缃戦〉 / 娣诲姞鍒颁富灞忓箷銆備箣鍚?strong>鏃犵綉缁滀篃鑳界敤</strong>锛堝湴鍥鹃櫎澶栵級銆?/div>
+<div class="offline-banner">📱 出发前 <strong>保存此页面</strong>：浏览器菜单 → 保存网页 / 添加到主屏幕。之后<strong>无网络也能用</strong>（地图除外）。</div>
 <div class="tab-bar">
-<div class="tab active" data-tab="itinerary">馃搮 琛岀▼</div>
-<div class="tab" data-tab="map">馃椇锔?鍦板浘</div>
-<div class="tab" data-tab="tips">馃搵 鏀荤暐</div>
-<div class="tab" data-tab="budget">馃挵 棰勭畻</div>
+<div class="tab active" data-tab="itinerary">📅 行程</div>
+<div class="tab" data-tab="map">🗺️ 地图</div>
+<div class="tab" data-tab="tips">📋 攻略</div>
+<div class="tab" data-tab="budget">💰 预算</div>
 </div>
 <div class="content" id="content"></div>
-<div class="footer">鍖楃枂鐜嚎鑷┚娓告柟妗?路 2025骞?-8鏈?路 绁濅綘鏃呴€旀剦蹇?馃尶</div>
+<div class="footer">北疆环线自驾游方案 · 2025年7-8月 · 祝你旅途愉快 🌿</div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 var itineraryData = [
-  { day:1, date:"7鏈?5鏃?鍛ㄤ簲", type:"flight", title:"鍖椾含 鈫?涔岄瞾鏈ㄩ綈", route:"鉁堬笍 椋炶绾?灏忔椂", drive:"鈥?, driveTime:"鈥?,
-    highlights:["涓嬪崍浠庡寳浜嚭鍙戯紝椋炲線涔岄瞾鏈ㄩ綈","绾?3:00鎶佃揪鍦扮獫鍫″浗闄呮満鍦?,"鏈哄満鍙栬溅锛堟彁鍓嶅湪涓€鍡?绁炲窞绉熻溅棰勫畾SUV锛?],
-    food:["椋炴満椁愭垨鏈哄満绠€椁?],
-    hotel:"涔岄瞾鏈ㄩ綈甯傚尯閰掑簵锛堝叏瀛?浜氭湹锛岀害300-500鍏?鏅氾級",
-    tips:"鎻愬墠涓嬭浇鏂扮枂绂荤嚎鍦板浘锛堥珮寰?鐧惧害锛夈€傜杞﹂€塖UV锛岀嫭搴撳叕璺拰灞辫矾鏇村畨蹇冦€? },
-  { day:2, date:"7鏈?6鏃?鍛ㄥ叚", type:"drive", title:"涔岄瞾鏈ㄩ綈 鈫?澶╁北澶╂睜 鈫?鍙彲鎵樻捣", route:"涔屽競 鈫?澶╂睜 鈫?鍙彲鎵樻捣闀?, drive:"绾?00km", driveTime:"椹鹃┒绾?.5h",
-    highlights:["澶╁北澶╂睜锛氳窛涔屽競110km锛?.5h杞︾▼锛岄洩灞卞€掓槧婀栭潰锛屾父瑙?-3h","缁?16鍥介亾锛堥樋宸寸嚎锛夊寳涓婏紝鎴堝涓庤崏鍘熶氦鏇?,"閫旂粡浜斿僵婀俱€佸彜灏旂彮閫氬彜鐗规矙婕犺竟缂?,"鏅氫笂鎶佃揪鍙彲鎵樻捣闀?],
-    food:["鍗堥锛氬ぉ姹犳櫙鍖洪檮杩戞媽闈?鎶撻キ","鏅氶锛氬彲鍙墭娴烽晣锛堝ぇ鐩橀浮銆佺儰鍖呭瓙锛?],
-    hotel:"鍙彲鎵樻捣闀?瀵岃暣鍘块厭搴楋紙绾?00-350鍏?鏅氾級",
-    tips:"澶╂睜娴锋嫈1910m锛?鏈堟皵娓?5-25掳C锛屽甫钖勫濂椼€?16鍥介亾鍔犳补绔欓棿闅旇繙锛屾弧娌瑰嚭鍙戙€備綇鍙彲鎵樻捣闀囨柟渚跨浜屽ぉ涓€鏃╄繘鏅尯銆? },
-  { day:3, date:"7鏈?7鏃?鍛ㄦ棩", type:"long", title:"鍙彲鎵樻捣 鈫?绂炬湪鏉?鈿狅笍闀块┚椹舵棩", route:"鍙彲鎵樻捣 鈫?绂炬湪", drive:"绾?10km", driveTime:"椹鹃┒绾?.5h锛堥渶鏃╄捣锛?,
-    highlights:["馃寘 鏃╄捣锛佸彲鍙墭娴锋櫙鍖轰竴寮€闂ㄥ氨杩涳紙绁為挓灞便€侀灏旈綈鏂ぇ宄¤胺锛?-5h锛?,"涓崍鍓嶅悗鍑哄彂锛岀粡鍖楀悲銆佸啿涔庡皵鍓嶅線绂炬湪","娌块€旈鏅粠鎴堝杩囨浮鍒板北鏋楄崏鍘?,"鍌嶆櫄鎶佃揪绂炬湪鏉戯紙鏂扮枂鏃ヨ惤绾?2:00锛岃繕鑳介€涳級","鍏ヤ綇灏忔湪灞嬶紝鎰熷彈鍥剧摝鏉戣惤姘涘洿"],
-    food:["鍗堥锛氬彲鍙墭娴烽晣鎴栨部閫旂畝椁愶紙寤鸿鎵撳寘璺笂鍚冿級","鏅氶锛氱鏈ㄦ潙鍦熺伀閿呫€佹墜鎶撹倝"],
-    hotel:"绂炬湪鏉戝皬鏈ㄥ眿姘戝锛堢害400-800鍏?鏅氾紝鎻愬墠棰勮锛?,
-    tips:"鈿狅笍 浠婂ぉ鏄叏绋嬫渶闀块┚椹舵棩涔嬩竴銆傚彲鍙墭娴峰姟蹇呮棭杩涙棭鍑猴紙寮€闂ㄥ氨杩涳紝涓崍鍓嶅嚭鏉ワ級锛岀暀瓒?-6h璧惰矾銆傝溅鍋滅鏈ㄦ潙澶栧仠杞﹀満锛屽潗鍖洪棿杞﹁繘鏉戙€? },
-  { day:4, date:"7鏈?8鏃?鍛ㄤ竴", type:"stay", title:"绂炬湪鏉戝叏澶╂繁搴︽父", route:"绂炬湪鏉戝唴", drive:"鈥?, driveTime:"鈥?,
-    highlights:["馃寘 鏃╄捣锛?:00鍓嶏級鐧昏鏅彴鐪嬫櫒闆锯€斺€旂鏈ㄦ渶缁忓吀鐢婚潰","鏉戜腑闂查€涳紝浣撻獙鍥剧摝浜烘枃鍖?,"楠戦┈鍘荤編涓藉嘲锛?-3h寰€杩旓級","鎴栨部绂炬湪娌冲緬姝ヨ嚦鎻寸枂妗?,"鏅氫笂鎷嶆槦绌?],
-    food:["鏉戝唴鍦熺伀閿呫€侀吀濂躲€佺儰棣?],
-    hotel:"绂炬湪鏉戝皬鏈ㄥ眿姘戝锛堢画浣忥級",
-    tips:"鏅ㄩ浘鏄簿鍗庯紝蹇呴』鏃╄捣锛侀獞椹害80-120鍏?h锛岃寰楄浠枫€傚甫濂界浉鏈哄拰涓夎剼鏋舵媿鏄熺┖銆傛棭鏅氭俯宸ぇ锛屾櫄涓婂彲鑳?0掳C銆? },
-  { day:5, date:"7鏈?9鏃?鍛ㄤ簩", type:"drive", title:"绂炬湪 鈫?鍠€绾虫柉", route:"绂炬湪 鈫?鍠€绾虫柉", drive:"绾?0km", driveTime:"椹鹃┒绾?.5h",
-    highlights:["涓婂崍绂诲紑绂炬湪锛岄┍杞﹀墠寰€鍠€绾虫柉","鎹箻鏅尯鍖洪棿杞?,"娓歌鍠€绾虫柉婀栥€佹箹杈规爤閬?,"鐧昏楸煎彴锛?068绾у彴闃讹級锛屼刊鐬版箹鏅?],
-    food:["鍗堥锛氬杸绾虫柉鏅尯鍐咃紙浠锋牸鍋忛珮锛?,"鏅氶锛氳淳鐧诲唱鎴栨櫙鍖哄唴椁愰"],
-    hotel:"鍠€绾虫柉鏅尯鍐呮湪灞嬫垨璐剧櫥宄厭搴楋紙绾?00-700鍏?鏅氾級",
-    tips:"鍠€绾虫柉闂ㄧエ+鍖洪棿杞︾害230鍏冦€傝楸煎彴闇€鍙﹁喘绁ㄣ€傛櫙鍖哄唴鐗╀环楂橈紝鎻愬墠澶囦簺闆堕銆? },
-  { day:6, date:"7鏈?0鏃?鍛ㄤ笁", type:"stay", title:"鍠€绾虫柉鍏ㄥぉ 路 涓夋咕寰掓", route:"鍠€绾虫柉鏅尯鍐?, drive:"鈥?, driveTime:"鈥?,
-    highlights:["馃尶 绁炰粰婀炬櫒闆撅紙鏃╄捣锛佽秴姊﹀够锛?,"鏈堜寒婀锯€斺€斿杸绾虫柉鏍囧織鏅","鍗ч緳婀锯€斺€旀箹蹇冨矝褰技鍗ч緳","涓夋咕涔嬮棿寰掓锛堢害6km锛?-3h锛夛紝椋庢櫙缁濅匠","鍙€夛細涔樿埞娓告箹鎴栨紓娴佷綋楠?],
-    food:["鏅尯鍐呴鍘呮垨鑷甫骞茬伯"],
-    hotel:"鍠€绾虫柉鏅尯鍐呮湪灞嬫垨璐剧櫥宄厭搴楋紙缁綇锛?,
-    tips:"涓夋咕寰掓鏄杸绾虫柉绮惧崕銆傜浠欐咕鏅ㄩ浘鍦ㄦ棩鍑哄墠鍚庢渶浣炽€備綋鍔涗竴鑸篃鍙潗鍖洪棿杞﹂€愮珯娓歌銆? },
-  { day:7, date:"7鏈?1鏃?鍛ㄥ洓", type:"drive", title:"鍠€绾虫柉 鈫?绂忔捣锛堜箤浼﹀彜婀栵級", route:"鍠€绾虫柉 鈫?绂忔捣", drive:"绾?50km", driveTime:"椹鹃┒绾?h",
-    highlights:["涓婂崍绂诲紑鍠€绾虫柉锛岀粡甯冨皵娲ュ崡涓嬶紙鍙湪姝よˉ缁欏姞娌癸級","涓嬪崍鎶佃揪绂忔捣鍘匡紝娓歌涔屼鸡鍙ゆ箹","榛勯噾娴峰哺鈥斺€旀垐澹佷腑鐨勯噾鑹叉矙婊╋紝琚О涓烘垐澹佸ぇ娴?,"婀栬竟婕銆佽楦?,"鍌嶆櫄鐪嬫垐澹佹箹娉婃棩钀?,"鏅氶鍝佸皾涔屼鸡鍙ゆ箹楸煎锛堢嫍楸笺€佷簲閬撻粦绛夋箹椴滐級"],
-    food:["鍗堥锛氬竷灏旀触","鏅氶锛氱娴峰幙锛堝己鐑堟帹鑽愪箤浼﹀彜婀栧叏楸煎锛侊級"],
-    hotel:"绂忔捣鍘垮煄閰掑簵锛堢害200-350鍏?鏅氾級",
-    tips:"涔屼鸡鍙ゆ箹鏄柊鐤嗙浜屽ぇ娣℃按婀栥€傞粍閲戞捣宀告櫙鍖洪棬绁ㄧ害45鍏冦€傜娴烽奔鏄壒鑹诧紝涓€瀹氳灏濓紒鍘垮煄閰掑簵閫夋嫨鏈夐檺锛屽缓璁彁鍓嶉璁€? },
-  { day:8, date:"8鏈?鏃?鍛ㄤ簲", type:"drive", title:"绂忔捣 鈫?涔屽皵绂鹃瓟楝煎煄 鈫?鍏嬫媺鐜涗緷", route:"绂忔捣 鈫?鍜屼粈鎵樻礇鐩?鈫?涔屽皵绂?鈫?鍏嬫媺鐜涗緷", drive:"绾?50km", driveTime:"椹鹃┒绾?.5h",
-    highlights:["涓婂崍鍑哄彂锛岀粡鍜屼粈鎵樻礇鐩栧崡涓?,"涓嬪崍鍒拌揪涔屽皵绂鹃瓟楝煎煄","闆呬腹鍦拌矊锛屾棩钀芥椂鍒嗗厜褰辨渶浣?,"鏅尯灏忕伀杞︽父瑙堬紙绾?.5h锛?,"鏅氫笂鎶佃揪鐭虫补涔嬪煄鍏嬫媺鐜涗緷"],
-    food:["鍗堥锛氬拰浠€鎵樻礇鐩栨垨涔屽皵绂?,"鏅氶锛氬厠鎷夌帥渚濆競鍖猴紙鐑よ倝銆佹媽闈級"],
-    hotel:"鍏嬫媺鐜涗緷甯傚尯閰掑簵锛堢害250-400鍏?鏅氾級",
-    tips:"榄旈鍩庢棩钀界害21:30锛堟柊鐤嗘椂闂达級锛屼笅鍗堟櫄浜涜繘鍥渶浣炽€傛櫙鍖烘湁鍖洪棿灏忕伀杞︼紝鍏ㄧ▼绾?.5h銆? },
-  { day:9, date:"8鏈?鏃?鍛ㄥ叚", type:"drive", title:"鍏嬫媺鐜涗緷 鈫?璧涢噷鏈ㄦ箹", route:"鍏嬫媺鐜涗緷 鈫?璧涢噷鏈ㄦ箹", drive:"绾?50km", driveTime:"椹鹃┒绾?.5h锛堥珮閫燂級",
-    highlights:["娌縂30杩為湇楂橀€熶竴璺悜瑗?,"閫旂粡濂庡悲銆佺簿娌?,"涓嬪崍鍒拌揪璧涢噷鏈ㄦ箹鈥斺€斿ぇ瑗挎磱鏈€鍚庝竴婊寸溂娉?,"鐜箹娓歌锛堢害90km鐜箹璺級锛岄殢鏃跺仠杞︽媿鐓?,"婀栬竟鐪嬫棩钀斤紝婀栨按婀涜摑濡傛捣"],
-    food:["鍗堥锛氱簿娌虫垨浜斿彴鏈嶅姟鍖?,"鏅氶锛氳禌婀栭檮杩?鏋滃瓙娌熷啘瀹朵箰锛堥珮鐧介矐楸硷級"],
-    hotel:"璧涙箹鏅尯鍐呮鎴?鎴胯溅钀ュ湴鎴栨灉瀛愭矡/娓呮按娌抽晣锛堢害300-600鍏?鏅氾級",
-    tips:"璧涢噷鏈ㄦ箹娴锋嫈2073m锛屾箹杈归澶э紝甯﹂槻椋庡濂椼€傜幆婀栧缓璁€嗘椂閽堟柟鍚戯紝鍏夌嚎鏇村ソ銆傝嚜椹剧幆婀栭渶鍙︿粯璐圭敤銆? },
-  { day:10, date:"8鏈?鏃?鍛ㄦ棩", type:"drive", title:"璧涢噷鏈ㄦ箹 鈫?鏋滃瓙娌?鈫?浼婂畞", route:"璧涢噷鏈ㄦ箹 鈫?鏋滃瓙娌熷ぇ妗?鈫?浼婂畞", drive:"绾?00km", driveTime:"椹鹃┒绾?h",
-    highlights:["鏃╀笂鍐嶇湅璧涙箹鏅ㄦ櫙","缁忔灉瀛愭矡澶фˉ锛堝场璋烽珮妗ワ紝宸ョ▼濂囪抗锛岃鏅彴鍋滆溅鎷嶇収锛?,"涓嬪崍鍒拌揪浼婂畞","閫涘杸璧炲叾姘戜織鏃呮父鍖猴紙钃濊壊灏忛晣锛岀淮鍚惧皵椋庢儏锛?,"浼婄妬娌冲ぇ妗ョ湅鏃ヨ惤"],
-    food:["鍗堥锛氭灉瀛愭矡鎴栬姦鑽夋矡","鏅氶锛氫紛瀹佸競鍖猴紙鑹惧凹绾抽潰棣嗐€佹墜宸ュ啺娣囨穻锛?],
-    hotel:"浼婂畞甯傚尯閰掑簵锛堢害250-450鍏?鏅氾級",
-    tips:"鏋滃瓙娌熷ぇ妗ユ湁涓撻棬鐨勮鏅彴銆傚杸璧炲叾閫傚悎涓嬪崍鍏夌嚎鏌斿拰鏃舵媿鐓э紝钃濊壊灏忓贩闈炲父鍑虹墖銆? },
-  { day:11, date:"8鏈?鏃?鍛ㄤ竴", type:"drive", title:"浼婂畞 鈫?閭ｆ媺鎻愯崏鍘?, route:"浼婂畞 鈫?閭ｆ媺鎻?, drive:"绾?50km", driveTime:"椹鹃┒绾?.5h",
-    highlights:["娌夸紛鐘佹渤璋蜂笢琛岋紝涓€璺渤璋烽鍏?,"閫旂粡宸╃暀銆佹柊婧?,"涓嬪崍鍒拌揪閭ｆ媺鎻愯崏鍘?,"绌轰腑鑽夊師锛堝潗鍖洪棿杞︿笂灞憋紝瑙嗛噹寮€闃旓級","鑽夊師婕銆侀獞椹€佹媿鐓?],
-    food:["鍗堥锛氭柊婧愬幙鎴栨部閫?,"鏅氶锛氶偅鎷夋彁闀囷紙缇婅倝涓层€佹墜鎶撻キ锛?],
-    hotel:"閭ｆ媺鎻愰晣閰掑簵/姘戝锛堢害300-600鍏?鏅氾級",
-    tips:"閭ｆ媺鎻愬垎绌轰腑鑽夊師鍜屾渤璋疯崏鍘熶袱鍖猴紝浼樺厛閫夌┖涓崏鍘熴€傚尯闂磋溅绾?0-100鍏冦€傛敞鎰忛槻鏅掋€? },
-  { day:12, date:"8鏈?鏃?鍛ㄤ簩", type:"drive", title:"閭ｆ媺鎻?鈫?宸撮煶甯冮瞾鍏?, route:"閭ｆ媺鎻?鈫?宸撮煶甯冮瞾鍏嬶紙鐙簱涓锛?, drive:"绾?00km", driveTime:"椹鹃┒绾?.5h",
-    highlights:["涓婂崍鍙户缁父瑙堥偅鎷夋彁娌宠胺鑽夊師","涓崍杩涘叆鐙簱鍏矾涓鈥斺€旂粷缇庨珮灞辫崏鍘熷叕璺?,"涓嬪崍鍒拌揪宸撮煶甯冮瞾鍏?,"娓歌澶╅箙婀?,"馃寘 閲嶇偣锛氫節鏇插崄鍏集鏃ヨ惤锛堝彲鐪嬪埌9涓お闃冲€掑奖锛?],
-    food:["鍗堥锛氶偅鎷夋彁闀?,"鏅氶锛氬反闊冲竷椴佸厠闀?],
-    hotel:"宸撮煶甯冮瞾鍏嬮晣閰掑簵/钂欏彜鍖咃紙绾?00-500鍏?鏅氾級",
-    tips:"宸撮煶甯冮瞾鍏嬫捣鎷旂害2500m锛屾敞鎰忎繚鏆栥€備節鏇插崄鍏集鏃ヨ惤鏄噸澶存垙锛屾彁鍓嶅崰濂芥満浣嶏紒鏃ヨ惤绾?1:30銆傚尯闂磋溅鍒颁節鏇插崄鍏集绾?0鍒嗛挓銆? },
-  { day:13, date:"8鏈?鏃?鍛ㄤ笁", type:"drive", title:"宸撮煶甯冮瞾鍏?鈫?鐙簱鍏矾 鈫?涔岄瞾鏈ㄩ綈", route:"宸撮煶甯冮瞾鍏?鈫?鐙簱鍖楁 鈫?涔岄瞾鏈ㄩ綈", drive:"绾?50km", driveTime:"椹鹃┒绾?-9h",
-    highlights:["馃寗 鐙簱鍏矾鍖楁鈥斺€斾腑鍥芥渶缇庡叕璺?,"缈昏秺鍝堝笇鍕掓牴杈惧潅锛堟捣鎷?400m锛?,"绌胯秺涔斿皵鐜涖€佺嫭灞卞瓙澶у场璋?,"涓€澶╃粡鍘嗘槬澶忕鍐洓瀛ｆ櫙瑙?,"杈涜嫤浣嗛渿鎾肩殑椹鹃┒鏃?,"鏅氫笂鍥炲埌涔岄瞾鏈ㄩ綈"],
-    food:["鍗堥锛氫箶灏旂帥鎴栫嫭灞卞瓙","鏅氶锛氫箤椴佹湪榻愶紙妤煎叞绉樼儰銆佽绔欏ぇ鐩橀浮锛?],
-    hotel:"涔岄瞾鏈ㄩ綈甯傚尯閰掑簵锛堢害300-500鍏?鏅氾級",
-    tips:"鐙簱鍏矾鍖楁绾?50km锛屽北鍖哄ぉ姘斿鍙橈紝鍙兘閬囧埌闆ㄩ洩銆備箶灏旂帥鐑堝＋绾康棣嗗€煎緱涓€鐪嬨€傚洖涔屽競鍚庤繕杞︺€? },
-  { day:14, date:"8鏈?鏃?鍛ㄥ洓", type:"flight", title:"涔岄瞾鏈ㄩ綈 鈫?鍖椾含", route:"鉁堬笍 椋炶绾?灏忔椂", drive:"鈥?, driveTime:"鈥?,
-    highlights:["涓婂崍閫涘浗闄呭ぇ宸存墡锛堝共鏋溿€佸伐鑹哄搧浼存墜绀硷級","鏂扮枂鍗氱墿棣嗭紙鐪嬫ゼ鍏扮編濂冲共灏革級","鏍规嵁鑸彮鏃堕棿鍓嶅線鏈哄満","椋炲洖鍖椾含锛屾梾绋嬪渾婊＄粨鏉燂紒"],
-    food:["鍗堥锛氬ぇ宸存墡闄勮繎锛堟渶鍚庝竴椤挎柊鐤嗙編椋燂紒锛?],
-    hotel:"鈥?,
-    tips:"杩旂▼鑸彮寤鸿閫変笅鍗堟垨鏅氫笂锛屼笂鍗堟湁鏃堕棿閫涖€傚ぇ宸存墡鍙互璁蹭环銆傚共鏋滄帹鑽愭棤鑺辨灉銆佺孩鏋ｃ€佽憽钀勫共銆佸反鏃︽湪銆? }
+  { day:1, date:"7月25日 周五", type:"flight", title:"北京 → 乌鲁木齐", route:"✈️ 飞行约4小时", drive:"—", driveTime:"—",
+    highlights:["下午从北京出发，飞往乌鲁木齐","约23:00抵达地窝堡国际机场","机场取车（提前在一嗨/神州租车预定SUV）"],
+    food:["飞机餐或机场简餐"],
+    hotel:"乌鲁木齐市区酒店（全季/亚朵，约300-500元/晚）",
+    tips:"提前下载新疆离线地图（高德/百度）。租车选SUV，独库公路和山路更安心。" },
+  { day:2, date:"7月26日 周六", type:"drive", title:"乌鲁木齐 → 天山天池 → 可可托海", route:"乌市 → 天池 → 可可托海镇", drive:"约500km", driveTime:"驾驶约6.5h",
+    highlights:["天山天池：距乌市110km，1.5h车程，雪山倒映湖面，游览2-3h","经216国道（阿巴线）北上，戈壁与草原交替","途经五彩湾、古尔班通古特沙漠边缘","晚上抵达可可托海镇"],
+    food:["午餐：天池景区附近拌面/抓饭","晚餐：可可托海镇（大盘鸡、烤包子）"],
+    hotel:"可可托海镇/富蕴县酒店（约200-350元/晚）",
+    tips:"天池海拔1910m，7月气温15-25°C，带薄外套。216国道加油站间隔远，满油出发。住可可托海镇方便第二天一早进景区。" },
+  { day:3, date:"7月27日 周日", type:"long", title:"可可托海 → 禾木村 ⚠️长驾驶日", route:"可可托海 → 禾木", drive:"约410km", driveTime:"驾驶约5.5h（需早起）",
+    highlights:["🌅 早起！可可托海景区一开门就进（神钟山、额尔齐斯大峡谷，4-5h）","中午前后出发，经北屯、冲乎尔前往禾木","沿途风景从戈壁过渡到山林草原","傍晚抵达禾木村（新疆日落约22:00，还能逛）","入住小木屋，感受图瓦村落氛围"],
+    food:["午餐：可可托海镇或沿途简餐（建议打包路上吃）","晚餐：禾木村土火锅、手抓肉"],
+    hotel:"禾木村小木屋民宿（约400-800元/晚，提前预订）",
+    tips:"⚠️ 今天是全程最长驾驶日之一。可可托海务必早进早出（开门就进，中午前出来），留足5-6h赶路。车停禾木村外停车场，坐区间车进村。" },
+  { day:4, date:"7月28日 周一", type:"stay", title:"禾木村全天深度游", route:"禾木村内", drive:"—", driveTime:"—",
+    highlights:["🌅 早起（6:00前）登观景台看晨雾——禾木最经典画面","村中闲逛，体验图瓦人文化","骑马去美丽峰（2-3h往返）","或沿禾木河徒步至援疆桥","晚上拍星空"],
+    food:["村内土火锅、酸奶、烤馕"],
+    hotel:"禾木村小木屋民宿（续住）",
+    tips:"晨雾是精华，必须早起！骑马约80-120元/h，记得讲价。带好相机和三脚架拍星空。早晚温差大，晚上可能10°C。" },
+  { day:5, date:"7月29日 周二", type:"drive", title:"禾木 → 喀纳斯", route:"禾木 → 喀纳斯", drive:"约70km", driveTime:"驾驶约1.5h",
+    highlights:["上午离开禾木，驱车前往喀纳斯","换乘景区区间车","游览喀纳斯湖、湖边栈道","登观鱼台（1068级台阶），俯瞰湖景"],
+    food:["午餐：喀纳斯景区内（价格偏高）","晚餐：贾登峪或景区内餐馆"],
+    hotel:"喀纳斯景区内木屋或贾登峪酒店（约400-700元/晚）",
+    tips:"喀纳斯门票+区间车约230元。观鱼台需另购票。景区内物价高，提前备些零食。" },
+  { day:6, date:"7月30日 周三", type:"stay", title:"喀纳斯全天 · 三湾徒步", route:"喀纳斯景区内", drive:"—", driveTime:"—",
+    highlights:["🌿 神仙湾晨雾（早起！超梦幻）","月亮湾——喀纳斯标志景观","卧龙湾——湖心岛形似卧龙","三湾之间徒步（约6km，2-3h），风景绝佳","可选：乘船游湖或漂流体验"],
+    food:["景区内餐厅或自带干粮"],
+    hotel:"喀纳斯景区内木屋或贾登峪酒店（续住）",
+    tips:"三湾徒步是喀纳斯精华。神仙湾晨雾在日出前后最佳。体力一般也可坐区间车逐站游览。" },
+  { day:7, date:"7月31日 周四", type:"drive", title:"喀纳斯 → 福海（乌伦古湖）", route:"喀纳斯 → 福海", drive:"约350km", driveTime:"驾驶约5h",
+    highlights:["上午离开喀纳斯，经布尔津南下（可在此补给加油）","下午抵达福海县，游览乌伦古湖","黄金海岸——戈壁中的金色沙滩，被称为戈壁大海","湖边漫步、观鸟","傍晚看戈壁湖泊日落","晚餐品尝乌伦古湖鱼宴（狗鱼、五道黑等湖鲜）"],
+    food:["午餐：布尔津","晚餐：福海县（强烈推荐乌伦古湖全鱼宴！）"],
+    hotel:"福海县城酒店（约200-350元/晚）",
+    tips:"乌伦古湖是新疆第二大淡水湖。黄金海岸景区门票约45元。福海鱼是特色，一定要尝！县城酒店选择有限，建议提前预订。" },
+  { day:8, date:"8月1日 周五", type:"drive", title:"福海 → 乌尔禾魔鬼城 → 克拉玛依", route:"福海 → 和什托洛盖 → 乌尔禾 → 克拉玛依", drive:"约350km", driveTime:"驾驶约4.5h",
+    highlights:["上午出发，经和什托洛盖南下","下午到达乌尔禾魔鬼城","雅丹地貌，日落时分光影最佳","景区小火车游览（约1.5h）","晚上抵达石油之城克拉玛依"],
+    food:["午餐：和什托洛盖或乌尔禾","晚餐：克拉玛依市区（烤肉、拌面）"],
+    hotel:"克拉玛依市区酒店（约250-400元/晚）",
+    tips:"魔鬼城日落约21:30（新疆时间），下午晚些进园最佳。景区有区间小火车，全程约1.5h。" },
+  { day:9, date:"8月2日 周六", type:"drive", title:"克拉玛依 → 赛里木湖", route:"克拉玛依 → 赛里木湖", drive:"约550km", driveTime:"驾驶约5.5h（高速）",
+    highlights:["沿G30连霍高速一路向西","途经奎屯、精河","下午到达赛里木湖——大西洋最后一滴眼泪","环湖游览（约90km环湖路），随时停车拍照","湖边看日落，湖水湛蓝如海"],
+    food:["午餐：精河或五台服务区","晚餐：赛湖附近/果子沟农家乐（高白鲑鱼）"],
+    hotel:"赛湖景区内毡房/房车营地或果子沟/清水河镇（约300-600元/晚）",
+    tips:"赛里木湖海拔2073m，湖边风大，带防风外套。环湖建议逆时针方向，光线更好。自驾环湖需另付费用。" },
+  { day:10, date:"8月3日 周日", type:"drive", title:"赛里木湖 → 果子沟 → 伊宁", route:"赛里木湖 → 果子沟大桥 → 伊宁", drive:"约200km", driveTime:"驾驶约3h",
+    highlights:["早上再看赛湖晨景","经果子沟大桥（峡谷高桥，工程奇迹，观景台停车拍照）","下午到达伊宁","逛喀赞其民俗旅游区（蓝色小镇，维吾尔风情）","伊犁河大桥看日落"],
+    food:["午餐：果子沟或芦草沟","晚餐：伊宁市区（艾尼纳面馆、手工冰淇淋）"],
+    hotel:"伊宁市区酒店（约250-450元/晚）",
+    tips:"果子沟大桥有专门的观景台。喀赞其适合下午光线柔和时拍照，蓝色小巷非常出片。" },
+  { day:11, date:"8月4日 周一", type:"drive", title:"伊宁 → 那拉提草原", route:"伊宁 → 那拉提", drive:"约250km", driveTime:"驾驶约3.5h",
+    highlights:["沿伊犁河谷东行，一路河谷风光","途经巩留、新源","下午到达那拉提草原","空中草原（坐区间车上山，视野开阔）","草原漫步、骑马、拍照"],
+    food:["午餐：新源县或沿途","晚餐：那拉提镇（羊肉串、手抓饭）"],
+    hotel:"那拉提镇酒店/民宿（约300-600元/晚）",
+    tips:"那拉提分空中草原和河谷草原两区，优先选空中草原。区间车约60-100元。注意防晒。" },
+  { day:12, date:"8月5日 周二", type:"drive", title:"那拉提 → 巴音布鲁克", route:"那拉提 → 巴音布鲁克（独库中段）", drive:"约200km", driveTime:"驾驶约3.5h",
+    highlights:["上午可继续游览那拉提河谷草原","中午进入独库公路中段——绝美高山草原公路","下午到达巴音布鲁克","游览天鹅湖","🌅 重点：九曲十八弯日落（可看到9个太阳倒影）"],
+    food:["午餐：那拉提镇","晚餐：巴音布鲁克镇"],
+    hotel:"巴音布鲁克镇酒店/蒙古包（约300-500元/晚）",
+    tips:"巴音布鲁克海拔约2500m，注意保暖。九曲十八弯日落是重头戏，提前占好机位！日落约21:30。区间车到九曲十八弯约40分钟。" },
+  { day:13, date:"8月6日 周三", type:"drive", title:"巴音布鲁克 → 独库公路 → 乌鲁木齐", route:"巴音布鲁克 → 独库北段 → 乌鲁木齐", drive:"约550km", driveTime:"驾驶约8-9h",
+    highlights:["🌄 独库公路北段——中国最美公路","翻越哈希勒根达坂（海拔3400m）","穿越乔尔玛、独山子大峡谷","一天经历春夏秋冬四季景观","辛苦但震撼的驾驶日","晚上回到乌鲁木齐"],
+    food:["午餐：乔尔玛或独山子","晚餐：乌鲁木齐（楼兰秘烤、血站大盘鸡）"],
+    hotel:"乌鲁木齐市区酒店（约300-500元/晚）",
+    tips:"独库公路北段约250km，山区天气多变，可能遇到雨雪。乔尔玛烈士纪念馆值得一看。回乌市后还车。" },
+  { day:14, date:"8月7日 周四", type:"flight", title:"乌鲁木齐 → 北京", route:"✈️ 飞行约4小时", drive:"—", driveTime:"—",
+    highlights:["上午逛国际大巴扎（干果、工艺品伴手礼）","新疆博物馆（看楼兰美女干尸）","根据航班时间前往机场","飞回北京，旅程圆满结束！"],
+    food:["午餐：大巴扎附近（最后一顿新疆美食！）"],
+    hotel:"—",
+    tips:"返程航班建议选下午或晚上，上午有时间逛。大巴扎可以讲价。干果推荐无花果、红枣、葡萄干、巴旦木。" }
 ];
 var mapWaypoints = [
-  {day:1,lat:43.907,lon:87.474,label:"涔岄瞾鏈ㄩ綈",type:"start"},
-  {day:2,lat:43.886,lon:88.131,label:"澶╁北澶╂睜"},
-  {day:2,lat:47.221,lon:89.805,label:"鍙彲鎵樻捣"},
-  {day:3,lat:48.573,lon:87.431,label:"绂炬湪"},
-  {day:5,lat:48.817,lon:87.039,label:"鍠€绾虫柉"},
-  {day:7,lat:47.113,lon:87.486,label:"绂忔捣路涔屼鸡鍙ゆ箹"},
-  {day:8,lat:46.077,lon:85.685,label:"榄旈鍩?},
-  {day:8,lat:45.579,lon:84.889,label:"鍏嬫媺鐜涗緷"},
-  {day:9,lat:44.609,lon:81.164,label:"璧涢噷鏈ㄦ箹"},
-  {day:10,lat:43.917,lon:81.323,label:"浼婂畞"},
-  {day:11,lat:43.333,lon:84.018,label:"閭ｆ媺鎻?},
-  {day:12,lat:43.033,lon:84.144,label:"宸撮煶甯冮瞾鍏?},
-  {day:13,lat:44.358,lon:84.848,label:"鐙北瀛?},
-  {day:13,lat:43.907,lon:87.474,label:"涔岄瞾鏈ㄩ綈",type:"end"}
+  {day:1,lat:43.907,lon:87.474,label:"乌鲁木齐",type:"start"},
+  {day:2,lat:43.886,lon:88.131,label:"天山天池"},
+  {day:2,lat:47.221,lon:89.805,label:"可可托海"},
+  {day:3,lat:48.573,lon:87.431,label:"禾木"},
+  {day:5,lat:48.817,lon:87.039,label:"喀纳斯"},
+  {day:7,lat:47.113,lon:87.486,label:"福海·乌伦古湖"},
+  {day:8,lat:46.077,lon:85.685,label:"魔鬼城"},
+  {day:8,lat:45.579,lon:84.889,label:"克拉玛依"},
+  {day:9,lat:44.609,lon:81.164,label:"赛里木湖"},
+  {day:10,lat:43.917,lon:81.323,label:"伊宁"},
+  {day:11,lat:43.333,lon:84.018,label:"那拉提"},
+  {day:12,lat:43.033,lon:84.144,label:"巴音布鲁克"},
+  {day:13,lat:44.358,lon:84.848,label:"独山子"},
+  {day:13,lat:43.907,lon:87.474,label:"乌鲁木齐",type:"end"}
 ];
 function renderItinerary(){
   var el=document.getElementById("content");
-  el.innerHTML='<div class="section-title">馃搮 姣忔棩琛岀▼</div>';
+  el.innerHTML='<div class="section-title">📅 每日行程</div>';
   itineraryData.forEach(function(d){
     var cls=d.type==="flight"?"flight":d.type==="stay"?"rest":d.type==="long"?"long":"drive";
-    var icon=d.type==="flight"?"鉁堬笍":d.type==="stay"?"馃槾":"馃殫";
-    var html='<div class="day-card" onclick="toggleDay(this)" data-day="'+d.day+'"><div class="day-header"><div class="day-num '+cls+'">'+icon+'</div><div class="day-info"><div class="date">'+d.date+'</div><div class="title">'+d.title+'</div><div class="route">'+d.route+(d.drive!=="鈥??" 路 "+d.drive:"")+'</div></div><div class="day-arrow">鈻?/div></div><div class="day-body"><div class="info-row">';
-    if(d.drive!=="鈥?)html+='<span class="info-tag drive">馃殫 '+d.drive+'</span>';
-    if(d.driveTime!=="鈥?)html+='<span class="info-tag drive">鈴?'+d.driveTime+'</span>';
+    var icon=d.type==="flight"?"✈️":d.type==="stay"?"😴":"🚗";
+    var html='<div class="day-card" onclick="toggleDay(this)" data-day="'+d.day+'"><div class="day-header"><div class="day-num '+cls+'">'+icon+'</div><div class="day-info"><div class="date">'+d.date+'</div><div class="title">'+d.title+'</div><div class="route">'+d.route+(d.drive!=="—"?" · "+d.drive:"")+'</div></div><div class="day-arrow">▶</div></div><div class="day-body"><div class="info-row">';
+    if(d.drive!=="—")html+='<span class="info-tag drive">🚗 '+d.drive+'</span>';
+    if(d.driveTime!=="—")html+='<span class="info-tag drive">⏱ '+d.driveTime+'</span>';
     html+='</div>';
-    if(d.highlights.length){html+='<h4>馃専 浠婃棩浜偣</h4><ul>';d.highlights.forEach(function(h){html+='<li>'+h+'</li>'});html+='</ul>';}
-    if(d.food.length){html+='<h4>馃崪 缇庨鎺ㄨ崘</h4><ul>';d.food.forEach(function(f){html+='<li>'+f+'</li>'});html+='</ul>';}
-    if(d.hotel!=="鈥?)html+='<span class="info-tag hotel">馃彣 '+d.hotel+'</span>';
-    if(d.tips)html+='<div class="highlight">馃挕 '+d.tips+'</div>';
+    if(d.highlights.length){html+='<h4>🌟 今日亮点</h4><ul>';d.highlights.forEach(function(h){html+='<li>'+h+'</li>'});html+='</ul>';}
+    if(d.food.length){html+='<h4>🍜 美食推荐</h4><ul>';d.food.forEach(function(f){html+='<li>'+f+'</li>'});html+='</ul>';}
+    if(d.hotel!=="—")html+='<span class="info-tag hotel">🏨 '+d.hotel+'</span>';
+    if(d.tips)html+='<div class="highlight">💡 '+d.tips+'</div>';
     html+='</div></div>';
     el.innerHTML+=html;
   });
@@ -200,7 +200,7 @@ function renderItinerary(){
 function toggleDay(card){card.classList.toggle("open")}
 function renderMap(){
   var el=document.getElementById("content");
-  el.innerHTML='<div class="section-title">馃椇锔?璺嚎鍦板浘</div><div id="map-view"><div class="map-fallback"><div class="icon">馃椇锔?/div><div class="title">鍦板浘闇€瑕佺綉缁滆繛鎺?/div><div class="desc">琛岀▼銆佹敾鐣ャ€侀绠楀彲绂荤嚎鏌ョ湅</div></div></div><div style="padding:0 4px"><p style="font-size:13px;color:#6b5e4e;line-height:1.7">涔岄瞾鏈ㄩ綈 鈫?澶╁北澶╂睜 鈫?鍙彲鎵樻捣 鈫?绂炬湪 鈫?鍠€绾虫柉 鈫?绂忔捣锛堜箤浼﹀彜婀栵級鈫?榄旈鍩?鈫?璧涢噷鏈ㄦ箹 鈫?鏋滃瓙娌?鈫?浼婂畞 鈫?閭ｆ媺鎻?鈫?宸撮煶甯冮瞾鍏?鈫?鐙簱鍏矾 鈫?涔岄瞾鏈ㄩ綈銆?/p></div>';
+  el.innerHTML='<div class="section-title">🗺️ 路线地图</div><div id="map-view"><div class="map-fallback"><div class="icon">🗺️</div><div class="title">地图需要网络连接</div><div class="desc">行程、攻略、预算可离线查看</div></div></div><div style="padding:0 4px"><p style="font-size:13px;color:#6b5e4e;line-height:1.7">乌鲁木齐 → 天山天池 → 可可托海 → 禾木 → 喀纳斯 → 福海（乌伦古湖）→ 魔鬼城 → 赛里木湖 → 果子沟 → 伊宁 → 那拉提 → 巴音布鲁克 → 独库公路 → 乌鲁木齐。</p></div>';
   setTimeout(function(){
     if(typeof L==="undefined")return;
     var mv=document.getElementById("map-view");
@@ -221,34 +221,34 @@ function renderMap(){
 }
 function renderTips(){
   var el=document.getElementById("content");
-  el.innerHTML='<div class="section-title">馃搵 瀹炵敤鏀荤暐</div>'+
-'<div class="tips-card"><h3><span class="icon">馃尋锔?/span>澶╂皵涓庣┛琛?/h3><ul><li>鍖楃枂7-8鏈堢櫧澶?5-35掳C锛屽鏅氬北鍖?0-15掳C</li><li>涔岄瞾鏈ㄩ綈/鍏嬫媺鐜涗緷鍋忕儹锛屽杸绾虫柉/宸撮煶甯冮瞾鍏嬫棭鏅氶渶澶栧</li><li>蹇呭锛氱煭琚?闀胯￥+闃叉檼琛?鎶撶粧琛?闃查澶栧锛堝啿閿嬭。鏈€浣筹級</li><li>甯藉瓙銆佸ⅷ闀溿€侀槻鏅掗湝锛堢传澶栫嚎寰堝己锛侊級</li><li>鑸掗€傜殑寰掓闉?杩愬姩闉?/li></ul></div>'+
-'<div class="tips-card"><h3><span class="icon">馃殫</span>鑷┚娉ㄦ剰浜嬮」</h3><ul><li>绉熻溅寤鸿SUV锛堝潶鍏?00/RAV4/濂囬獜锛夛紝绾?00-500鍏?澶?/li><li>鏂扮枂鍔犳补绔欓渶鍒疯韩浠借瘉+浜鸿劯璇嗗埆锛岀敱鍔犳补鍛樻搷浣?/li><li>鐙簱鍏矾7搴т互涓嬭溅杈嗗彲閫氳锛屾敞鎰忛檺琛屾椂闂?/li><li>灞卞尯璺娉ㄦ剰钀界煶銆佺墰缇婃í绌?/li><li>鎻愬墠涓嬭浇绂荤嚎鍦板浘锛堟柊鐤嗛儴鍒嗚矾娈垫棤淇″彿锛?/li><li>鍚庡绠卞姘村拰骞茬伯锛屾湁浜涜矾娈垫湇鍔″尯灏?/li><li>甯冨皵娲ユ槸鍠€绾虫柉鍦板尯鏈€鍚庝竴涓ぇ琛ョ粰绔欙紝鍗椾笅鏃惰寰楀姞娌?/li></ul></div>'+
-'<div class="tips-card"><h3><span class="icon">馃摑</span>蹇呭璇佷欢</h3><ul><li>韬唤璇侊紙鏂扮枂瀹夋澶氾紝闅忚韩鎼哄甫锛侊級</li><li>椹鹃┒璇?琛岄┒璇侊紙绉熻溅鐢級</li><li>灏戦噺鐜伴噾锛堟湁浜涚墽鍖哄彧鏀剁幇閲戯級</li></ul></div>'+
-'<div class="tips-card"><h3><span class="icon">馃彅锔?/span>鏅偣闂ㄧエ鍙傝€?/h3><ul><li>澶╁北澶╂睜锛氶棬绁?鍖洪棿杞︾害155鍏?/li><li>鍙彲鎵樻捣锛氶棬绁?鍖洪棿杞︾害126鍏?/li><li>绂炬湪鏉戯細闂ㄧエ+鍖洪棿杞︾害102鍏?/li><li>鍠€绾虫柉锛氶棬绁?鍖洪棿杞︾害230鍏冿紝瑙傞奔鍙板彟绾?0鍏?/li><li>涔屼鸡鍙ゆ箹榛勯噾娴峰哺锛氱害45鍏?/li><li>涔屽皵绂鹃瓟楝煎煄锛氶棬绁?灏忕伀杞︾害62鍏?/li><li>璧涢噷鏈ㄦ箹锛氶棬绁ㄧ害70鍏冿紝鑷┚鐜箹鍙︽敹璐?/li><li>閭ｆ媺鎻愶細闂ㄧエ+鍖洪棿杞︾害135鍏冿紙绌轰腑鑽夊師锛?/li><li>宸撮煶甯冮瞾鍏嬶細闂ㄧエ+鍖洪棿杞︾害140鍏?/li><li>鐙簱鍏矾锛氬厤璐癸紙鏈€缇庡叕璺灉鐒跺厤璐桂煒勶級</li></ul></div>'+
-'<div class="tips-card"><h3><span class="icon">馃摫</span>瀹炵敤APP</h3><ul><li>楂樺痉/鐧惧害鍦板浘锛堟彁鍓嶄笅杞芥柊鐤嗙绾垮湴鍥惧寘锛?/li><li>鎼虹▼/鍘诲摢鍎匡紙閰掑簵銆侀棬绁ㄩ璁級</li><li>涓€鍡ㄧ杞?绁炲窞绉熻溅</li><li>澶т紬鐐硅瘎锛堟壘缇庨锛?/li><li>灏忕孩涔︼紙鏌ユ渶鏂版敾鐣ャ€佽矾鍐碉級</li></ul></div>';
+  el.innerHTML='<div class="section-title">📋 实用攻略</div>'+
+'<div class="tips-card"><h3><span class="icon">🌤️</span>天气与穿衣</h3><ul><li>北疆7-8月白天25-35°C，夜晚山区10-15°C</li><li>乌鲁木齐/克拉玛依偏热，喀纳斯/巴音布鲁克早晚需外套</li><li>必备：短袖+长裤+防晒衣+抓绒衣+防风外套（冲锋衣最佳）</li><li>帽子、墨镜、防晒霜（紫外线很强！）</li><li>舒适的徒步鞋/运动鞋</li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">🚗</span>自驾注意事项</h3><ul><li>租车建议SUV（坦克300/RAV4/奇骏），约300-500元/天</li><li>新疆加油站需刷身份证+人脸识别，由加油员操作</li><li>独库公路7座以下车辆可通行，注意限行时间</li><li>山区路段注意落石、牛羊横穿</li><li>提前下载离线地图（新疆部分路段无信号）</li><li>后备箱备水和干粮，有些路段服务区少</li><li>布尔津是喀纳斯地区最后一个大补给站，南下时记得加油</li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">📝</span>必备证件</h3><ul><li>身份证（新疆安检多，随身携带！）</li><li>驾驶证+行驶证（租车用）</li><li>少量现金（有些牧区只收现金）</li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">🏔️</span>景点门票参考</h3><ul><li>天山天池：门票+区间车约155元</li><li>可可托海：门票+区间车约126元</li><li>禾木村：门票+区间车约102元</li><li>喀纳斯：门票+区间车约230元，观鱼台另约20元</li><li>乌伦古湖黄金海岸：约45元</li><li>乌尔禾魔鬼城：门票+小火车约62元</li><li>赛里木湖：门票约70元，自驾环湖另收费</li><li>那拉提：门票+区间车约135元（空中草原）</li><li>巴音布鲁克：门票+区间车约140元</li><li>独库公路：免费（最美公路果然免费😄）</li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">📱</span>实用APP</h3><ul><li>高德/百度地图（提前下载新疆离线地图包）</li><li>携程/去哪儿（酒店、门票预订）</li><li>一嗨租车/神州租车</li><li>大众点评（找美食）</li><li>小红书（查最新攻略、路况）</li></ul></div>';
 }
 function renderBudget(){
   var el=document.getElementById("content");
   var items=[
-    ["鉁堬笍 寰€杩旀満绁紙鍖椾含-涔岄瞾鏈ㄩ綈锛?,"2浜?脳 ~3000鍏?,"6,000"],
-    ["馃殫 绉熻溅锛圫UV锛?2澶╋級","12澶?脳 ~400鍏?澶?,"4,800"],
-    ["鉀?娌硅垂","~3400km 梅 100 脳 10L 脳 8鍏?,"2,720"],
-    ["馃洠锔?杩囪矾璐?,"楂橀€?鍥介亾","~900"],
-    ["馃彣 浣忓锛?3鏅氾級","13鏅?脳 ~350鍏?,"4,550"],
-    ["馃帿 鏅偣闂ㄧエ锛?浜猴級","绾?0涓櫙鐐?,"~3,800"],
-    ["馃崪 椁愰ギ","14澶?脳 2浜?脳 ~150鍏?,"4,200"],
-    ["馃吙锔?鍋滆溅+鍖洪棿杞︾瓑鏉傝垂","","~1,000"],
-    ["馃摫 鍏朵粬锛堥浂椋熴€佺邯蹇靛搧绛夛級","","~2,000"]
+    ["✈️ 往返机票（北京-乌鲁木齐）","2人 × ~3000元","6,000"],
+    ["🚗 租车（SUV，12天）","12天 × ~400元/天","4,800"],
+    ["⛽ 油费","~3400km ÷ 100 × 10L × 8元","2,720"],
+    ["🛣️ 过路费","高速+国道","~900"],
+    ["🏨 住宿（13晚）","13晚 × ~350元","4,550"],
+    ["🎫 景点门票（2人）","约10个景点","~3,800"],
+    ["🍜 餐饮","14天 × 2人 × ~150元","4,200"],
+    ["🅿️ 停车+区间车等杂费","","~1,000"],
+    ["📱 其他（零食、纪念品等）","","~2,000"]
   ];
   var total=0;
-  var html='<div class="section-title">馃挵 棰勭畻浼扮畻</div><div class="tips-card"><table class="budget-table">';
+  var html='<div class="section-title">💰 预算估算</div><div class="tips-card"><table class="budget-table">';
   items.forEach(function(item){
-    html+='<tr><td>'+item[0]+'</td><td style="font-size:11px;color:#9b8c7a">'+item[1]+'</td><td>楼'+item[2]+'</td></tr>';
+    html+='<tr><td>'+item[0]+'</td><td style="font-size:11px;color:#9b8c7a">'+item[1]+'</td><td>¥'+item[2]+'</td></tr>';
     total+=parseInt(item[2].replace(/,/g,""));
   });
-  html+='<tr class="total"><td colspan="2">鍚堣锛?浜猴級</td><td>楼'+total.toLocaleString()+'</td></tr>';
-  html+='</table><p style="font-size:12px;color:#9b8c7a;margin-top:8px">*浠ヤ笂涓轰袱浜哄嚭琛屼及绠楋紝瀹為檯鑺辫垂鍥犲鑺傘€侀厭搴楁。娆°€佺杞﹁溅鍨嬩笉鍚岃€屾湁娴姩銆備汉鍧囩害15,000鍏冨乏鍙炽€?/p></div>';
+  html+='<tr class="total"><td colspan="2">合计（2人）</td><td>¥'+total.toLocaleString()+'</td></tr>';
+  html+='</table><p style="font-size:12px;color:#9b8c7a;margin-top:8px">*以上为两人出行估算，实际花费因季节、酒店档次、租车车型不同而有浮动。人均约15,000元左右。</p></div>';
   el.innerHTML=html;
 }
 function switchTab(tabName){
