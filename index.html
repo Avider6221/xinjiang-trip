@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>北疆环线自驾游 · 14日行程</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f5f1eb;color:#2c2416;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -89,7 +89,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 <div class="content" id="content"></div>
 <div class="footer">北疆环线自驾游方案 · 2025年7-8月 · 祝你旅途愉快 🌿</div>
 </div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
 var itineraryData = [
   { day:1, date:"7月25日 周五", type:"flight", title:"北京 → 乌鲁木齐", route:"✈️ 飞行约4小时", drive:"—", driveTime:"—",
@@ -198,10 +198,11 @@ function renderItinerary(){
   });
 }
 function toggleDay(card){card.classList.toggle("open")}
+function loadLeaflet(cb){if(window.L){cb();return}var s=document.createElement("script");s.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";s.onload=function(){var l=document.createElement("link");l.rel="stylesheet";l.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";document.head.appendChild(l);cb()};s.onerror=function(){cb()};document.head.appendChild(s)}
 function renderMap(){
   var el=document.getElementById("content");
   el.innerHTML='<div class="section-title">🗺️ 路线地图</div><div id="map-view"><div class="map-fallback"><div class="icon">🗺️</div><div class="title">地图需要网络连接</div><div class="desc">行程、攻略、预算可离线查看</div></div></div><div style="padding:0 4px"><p style="font-size:13px;color:#6b5e4e;line-height:1.7">乌鲁木齐 → 天山天池 → 可可托海 → 禾木 → 喀纳斯 → 福海（乌伦古湖）→ 魔鬼城 → 赛里木湖 → 果子沟 → 伊宁 → 那拉提 → 巴音布鲁克 → 独库公路 → 乌鲁木齐。</p></div>';
-  setTimeout(function(){
+  loadLeaflet(function(){setTimeout(function(){
     if(typeof L==="undefined")return;
     var mv=document.getElementById("map-view");
     mv.innerHTML="";
@@ -216,8 +217,8 @@ function renderMap(){
       latlngs.push([wp.lat,wp.lon]);
     });
     L.polyline(latlngs,{color:"#2d5a3f",weight:3,opacity:.7,dashArray:"8,6"}).addTo(map);
-    setTimeout(function(){map.invalidateSize()},200);
-  },300);
+    loadLeaflet(function(){setTimeout(function(){map.invalidateSize()},200);
+  },300)});
 }
 function renderTips(){
   var el=document.getElementById("content");
