@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>鍖楃枂鐜嚎鑷┚娓?路 14鏃ヨ绋?/title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f5f1eb;color:#2c2416;line-height:1.6;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;margin:0 auto;min-height:100vh;background:#faf8f5;box-shadow:0 0 40px rgba(0,0,0,.08)}
+.header{background:linear-gradient(135deg,#1a3c2a 0%,#2d5a3f 40%,#3a7352 100%);color:#fff;padding:32px 20px 24px;position:sticky;top:0;z-index:100}
+.header h1{font-size:22px;font-weight:700;letter-spacing:2px;margin-bottom:4px}
+.header .sub{font-size:13px;opacity:.85;font-weight:400}
+.header .stats{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap}
+.header .stat{background:rgba(255,255,255,.15);border-radius:8px;padding:6px 12px;font-size:12px;white-space:nowrap}
+.header .stat strong{font-size:15px;display:block;line-height:1.3}
+.offline-banner{background:#fff9e8;border-bottom:1px solid #e8d89a;padding:10px 16px;font-size:11px;color:#8b6d2a;text-align:center;line-height:1.6}
+.offline-banner strong{color:#c7762a}
+.tab-bar{display:flex;background:#fff;border-bottom:1px solid #e8e2d8;position:sticky;top:0;z-index:99}
+.tab{flex:1;text-align:center;padding:14px 8px;font-size:14px;font-weight:600;color:#9b8c7a;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;user-select:none}
+.tab.active{color:#2d5a3f;border-bottom-color:#2d5a3f}
+.content{padding:0 16px 100px}
+.section-title{font-size:17px;font-weight:700;color:#1a3c2a;margin:24px 0 12px;padding-left:12px;border-left:4px solid #2d5a3f}
+.day-card{background:#fff;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden;cursor:pointer;transition:all .2s}
+.day-card:active{transform:scale(.985)}
+.day-header{display:flex;align-items:center;padding:16px;gap:14px}
+.day-num{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2d5a3f,#4a8b62);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
+.day-num.rest{background:linear-gradient(135deg,#8b7355,#a89070)}
+.day-num.flight{background:linear-gradient(135deg,#3a6088,#5a8ab0)}
+.day-num.long{background:linear-gradient(135deg,#c7762a,#e8983a)}
+.day-info{flex:1;min-width:0}
+.day-info .date{font-size:11px;color:#9b8c7a;font-weight:500}
+.day-info .title{font-size:15px;font-weight:700;color:#1a3c2a;margin:2px 0}
+.day-info .route{font-size:12px;color:#6b5e4e}
+.day-arrow{color:#c4b8a7;font-size:20px;transition:transform .3s}
+.day-card.open .day-arrow{transform:rotate(90deg)}
+.day-body{display:none;padding:0 16px 16px;border-top:1px solid #f0ebe0}
+.day-card.open .day-body{display:block}
+.day-body .info-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.day-body .info-tag{background:#f0ebe0;color:#5a4d3a;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:500}
+.day-body .info-tag.drive{background:#e8f0e8;color:#2d5a3f}
+.day-body .info-tag.food{background:#fff3e0;color:#c7762a}
+.day-body .info-tag.hotel{background:#e8ecf8;color:#3a4a88}
+.day-body h4{font-size:13px;color:#2d5a3f;margin:12px 0 6px;font-weight:700}
+.day-body p,.day-body li{font-size:13px;color:#5a4d3a;line-height:1.7}
+.day-body ul{padding-left:18px;margin:4px 0}
+.day-body li{margin-bottom:3px}
+.day-body .highlight{background:#fff9e8;border-left:3px solid #e8c84a;padding:8px 12px;border-radius:0 8px 8px 0;margin:8px 0;font-size:12px;color:#8b6d2a}
+#map-view{width:100%;height:60vh;border-radius:12px;margin:12px 0;overflow:hidden;background:#e8e2d8;display:flex;align-items:center;justify-content:center}
+.map-fallback{text-align:center;padding:40px 20px}
+.map-fallback .icon{font-size:48px;margin-bottom:12px}
+.map-fallback .title{color:#6b5e4e;font-size:15px;font-weight:700;margin-bottom:4px}
+.map-fallback .desc{color:#9b8c7a;font-size:12px}
+@media(min-width:768px){.app{max-width:768px}.header h1{font-size:28px}.day-header{padding:20px}.content{padding:0 24px 100px}#map-view{height:500px}}
+.tips-card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.tips-card h3{font-size:15px;font-weight:700;color:#1a3c2a;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.tips-card h3 .icon{font-size:20px}
+.tips-card ul{padding-left:18px}
+.tips-card li{font-size:13px;color:#5a4d3a;margin-bottom:6px;line-height:1.6}
+.budget-table{width:100%;border-collapse:collapse;margin:12px 0}
+.budget-table td{padding:10px 12px;border-bottom:1px solid #e8e2d8;font-size:13px}
+.budget-table td:last-child{text-align:right;font-weight:600;color:#2d5a3f}
+.budget-table tr.total td{border-top:2px solid #2d5a3f;font-size:15px;font-weight:800;color:#1a3c2a}
+.leaflet-popup-content{font-size:13px;font-family:inherit}
+.leaflet-popup-content strong{color:#2d5a3f}
+.footer{text-align:center;padding:24px;color:#c4b8a7;font-size:11px}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="header">
+<h1>馃彅锔?鍖楃枂鐜嚎鑷┚娓?/h1>
+<div class="sub">2025骞?鏈?5鏃?鈥?8鏈?鏃?路 14澶?3鏅?/div>
+<div class="stats">
+<div class="stat"><strong>~3400km</strong>鎬婚噷绋?/div>
+<div class="stat"><strong>12澶?/strong>娓哥帺澶╂暟</div>
+<div class="stat"><strong>13鏅?/strong>浣忓</div>
+<div class="stat"><strong>馃殫</strong>鍏ㄧ▼鑷┚</div>
+</div>
+</div>
+<div class="offline-banner">馃摫 鍑哄彂鍓?<strong>淇濆瓨姝ら〉闈?/strong>锛氭祻瑙堝櫒鑿滃崟 鈫?淇濆瓨缃戦〉 / 娣诲姞鍒颁富灞忓箷銆備箣鍚?strong>鏃犵綉缁滀篃鑳界敤</strong>锛堝湴鍥鹃櫎澶栵級銆?/div>
+<div class="tab-bar">
+<div class="tab active" data-tab="itinerary">馃搮 琛岀▼</div>
+<div class="tab" data-tab="map">馃椇锔?鍦板浘</div>
+<div class="tab" data-tab="tips">馃搵 鏀荤暐</div>
+<div class="tab" data-tab="budget">馃挵 棰勭畻</div>
+</div>
+<div class="content" id="content"></div>
+<div class="footer">鍖楃枂鐜嚎鑷┚娓告柟妗?路 2025骞?-8鏈?路 绁濅綘鏃呴€旀剦蹇?馃尶</div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+var itineraryData = [
+  { day:1, date:"7鏈?5鏃?鍛ㄤ簲", type:"flight", title:"鍖椾含 鈫?涔岄瞾鏈ㄩ綈", route:"鉁堬笍 椋炶绾?灏忔椂", drive:"鈥?, driveTime:"鈥?,
+    highlights:["涓嬪崍浠庡寳浜嚭鍙戯紝椋炲線涔岄瞾鏈ㄩ綈","绾?3:00鎶佃揪鍦扮獫鍫″浗闄呮満鍦?,"鏈哄満鍙栬溅锛堟彁鍓嶅湪涓€鍡?绁炲窞绉熻溅棰勫畾SUV锛?],
+    food:["椋炴満椁愭垨鏈哄満绠€椁?],
+    hotel:"涔岄瞾鏈ㄩ綈甯傚尯閰掑簵锛堝叏瀛?浜氭湹锛岀害300-500鍏?鏅氾級",
+    tips:"鎻愬墠涓嬭浇鏂扮枂绂荤嚎鍦板浘锛堥珮寰?鐧惧害锛夈€傜杞﹂€塖UV锛岀嫭搴撳叕璺拰灞辫矾鏇村畨蹇冦€? },
+  { day:2, date:"7鏈?6鏃?鍛ㄥ叚", type:"drive", title:"涔岄瞾鏈ㄩ綈 鈫?澶╁北澶╂睜 鈫?鍙彲鎵樻捣", route:"涔屽競 鈫?澶╂睜 鈫?鍙彲鎵樻捣闀?, drive:"绾?00km", driveTime:"椹鹃┒绾?.5h",
+    highlights:["澶╁北澶╂睜锛氳窛涔屽競110km锛?.5h杞︾▼锛岄洩灞卞€掓槧婀栭潰锛屾父瑙?-3h","缁?16鍥介亾锛堥樋宸寸嚎锛夊寳涓婏紝鎴堝涓庤崏鍘熶氦鏇?,"閫旂粡浜斿僵婀俱€佸彜灏旂彮閫氬彜鐗规矙婕犺竟缂?,"鏅氫笂鎶佃揪鍙彲鎵樻捣闀?],
+    food:["鍗堥锛氬ぉ姹犳櫙鍖洪檮杩戞媽闈?鎶撻キ","鏅氶锛氬彲鍙墭娴烽晣锛堝ぇ鐩橀浮銆佺儰鍖呭瓙锛?],
+    hotel:"鍙彲鎵樻捣闀?瀵岃暣鍘块厭搴楋紙绾?00-350鍏?鏅氾級",
+    tips:"澶╂睜娴锋嫈1910m锛?鏈堟皵娓?5-25掳C锛屽甫钖勫濂椼€?16鍥介亾鍔犳补绔欓棿闅旇繙锛屾弧娌瑰嚭鍙戙€備綇鍙彲鎵樻捣闀囨柟渚跨浜屽ぉ涓€鏃╄繘鏅尯銆? },
+  { day:3, date:"7鏈?7鏃?鍛ㄦ棩", type:"long", title:"鍙彲鎵樻捣 鈫?绂炬湪鏉?鈿狅笍闀块┚椹舵棩", route:"鍙彲鎵樻捣 鈫?绂炬湪", drive:"绾?10km", driveTime:"椹鹃┒绾?.5h锛堥渶鏃╄捣锛?,
+    highlights:["馃寘 鏃╄捣锛佸彲鍙墭娴锋櫙鍖轰竴寮€闂ㄥ氨杩涳紙绁為挓灞便€侀灏旈綈鏂ぇ宄¤胺锛?-5h锛?,"涓崍鍓嶅悗鍑哄彂锛岀粡鍖楀悲銆佸啿涔庡皵鍓嶅線绂炬湪","娌块€旈鏅粠鎴堝杩囨浮鍒板北鏋楄崏鍘?,"鍌嶆櫄鎶佃揪绂炬湪鏉戯紙鏂扮枂鏃ヨ惤绾?2:00锛岃繕鑳介€涳級","鍏ヤ綇灏忔湪灞嬶紝鎰熷彈鍥剧摝鏉戣惤姘涘洿"],
+    food:["鍗堥锛氬彲鍙墭娴烽晣鎴栨部閫旂畝椁愶紙寤鸿鎵撳寘璺笂鍚冿級","鏅氶锛氱鏈ㄦ潙鍦熺伀閿呫€佹墜鎶撹倝"],
+    hotel:"绂炬湪鏉戝皬鏈ㄥ眿姘戝锛堢害400-800鍏?鏅氾紝鎻愬墠棰勮锛?,
+    tips:"鈿狅笍 浠婂ぉ鏄叏绋嬫渶闀块┚椹舵棩涔嬩竴銆傚彲鍙墭娴峰姟蹇呮棭杩涙棭鍑猴紙寮€闂ㄥ氨杩涳紝涓崍鍓嶅嚭鏉ワ級锛岀暀瓒?-6h璧惰矾銆傝溅鍋滅鏈ㄦ潙澶栧仠杞﹀満锛屽潗鍖洪棿杞﹁繘鏉戙€? },
+  { day:4, date:"7鏈?8鏃?鍛ㄤ竴", type:"stay", title:"绂炬湪鏉戝叏澶╂繁搴︽父", route:"绂炬湪鏉戝唴", drive:"鈥?, driveTime:"鈥?,
+    highlights:["馃寘 鏃╄捣锛?:00鍓嶏級鐧昏鏅彴鐪嬫櫒闆锯€斺€旂鏈ㄦ渶缁忓吀鐢婚潰","鏉戜腑闂查€涳紝浣撻獙鍥剧摝浜烘枃鍖?,"楠戦┈鍘荤編涓藉嘲锛?-3h寰€杩旓級","鎴栨部绂炬湪娌冲緬姝ヨ嚦鎻寸枂妗?,"鏅氫笂鎷嶆槦绌?],
+    food:["鏉戝唴鍦熺伀閿呫€侀吀濂躲€佺儰棣?],
+    hotel:"绂炬湪鏉戝皬鏈ㄥ眿姘戝锛堢画浣忥級",
+    tips:"鏅ㄩ浘鏄簿鍗庯紝蹇呴』鏃╄捣锛侀獞椹害80-120鍏?h锛岃寰楄浠枫€傚甫濂界浉鏈哄拰涓夎剼鏋舵媿鏄熺┖銆傛棭鏅氭俯宸ぇ锛屾櫄涓婂彲鑳?0掳C銆? },
+  { day:5, date:"7鏈?9鏃?鍛ㄤ簩", type:"drive", title:"绂炬湪 鈫?鍠€绾虫柉", route:"绂炬湪 鈫?鍠€绾虫柉", drive:"绾?0km", driveTime:"椹鹃┒绾?.5h",
+    highlights:["涓婂崍绂诲紑绂炬湪锛岄┍杞﹀墠寰€鍠€绾虫柉","鎹箻鏅尯鍖洪棿杞?,"娓歌鍠€绾虫柉婀栥€佹箹杈规爤閬?,"鐧昏楸煎彴锛?068绾у彴闃讹級锛屼刊鐬版箹鏅?],
+    food:["鍗堥锛氬杸绾虫柉鏅尯鍐咃紙浠锋牸鍋忛珮锛?,"鏅氶锛氳淳鐧诲唱鎴栨櫙鍖哄唴椁愰"],
+    hotel:"鍠€绾虫柉鏅尯鍐呮湪灞嬫垨璐剧櫥宄厭搴楋紙绾?00-700鍏?鏅氾級",
+    tips:"鍠€绾虫柉闂ㄧエ+鍖洪棿杞︾害230鍏冦€傝楸煎彴闇€鍙﹁喘绁ㄣ€傛櫙鍖哄唴鐗╀环楂橈紝鎻愬墠澶囦簺闆堕銆? },
+  { day:6, date:"7鏈?0鏃?鍛ㄤ笁", type:"stay", title:"鍠€绾虫柉鍏ㄥぉ 路 涓夋咕寰掓", route:"鍠€绾虫柉鏅尯鍐?, drive:"鈥?, driveTime:"鈥?,
+    highlights:["馃尶 绁炰粰婀炬櫒闆撅紙鏃╄捣锛佽秴姊﹀够锛?,"鏈堜寒婀锯€斺€斿杸绾虫柉鏍囧織鏅","鍗ч緳婀锯€斺€旀箹蹇冨矝褰技鍗ч緳","涓夋咕涔嬮棿寰掓锛堢害6km锛?-3h锛夛紝椋庢櫙缁濅匠","鍙€夛細涔樿埞娓告箹鎴栨紓娴佷綋楠?],
+    food:["鏅尯鍐呴鍘呮垨鑷甫骞茬伯"],
+    hotel:"鍠€绾虫柉鏅尯鍐呮湪灞嬫垨璐剧櫥宄厭搴楋紙缁綇锛?,
+    tips:"涓夋咕寰掓鏄杸绾虫柉绮惧崕銆傜浠欐咕鏅ㄩ浘鍦ㄦ棩鍑哄墠鍚庢渶浣炽€備綋鍔涗竴鑸篃鍙潗鍖洪棿杞﹂€愮珯娓歌銆? },
+  { day:7, date:"7鏈?1鏃?鍛ㄥ洓", type:"drive", title:"鍠€绾虫柉 鈫?绂忔捣锛堜箤浼﹀彜婀栵級", route:"鍠€绾虫柉 鈫?绂忔捣", drive:"绾?50km", driveTime:"椹鹃┒绾?h",
+    highlights:["涓婂崍绂诲紑鍠€绾虫柉锛岀粡甯冨皵娲ュ崡涓嬶紙鍙湪姝よˉ缁欏姞娌癸級","涓嬪崍鎶佃揪绂忔捣鍘匡紝娓歌涔屼鸡鍙ゆ箹","榛勯噾娴峰哺鈥斺€旀垐澹佷腑鐨勯噾鑹叉矙婊╋紝琚О涓烘垐澹佸ぇ娴?,"婀栬竟婕銆佽楦?,"鍌嶆櫄鐪嬫垐澹佹箹娉婃棩钀?,"鏅氶鍝佸皾涔屼鸡鍙ゆ箹楸煎锛堢嫍楸笺€佷簲閬撻粦绛夋箹椴滐級"],
+    food:["鍗堥锛氬竷灏旀触","鏅氶锛氱娴峰幙锛堝己鐑堟帹鑽愪箤浼﹀彜婀栧叏楸煎锛侊級"],
+    hotel:"绂忔捣鍘垮煄閰掑簵锛堢害200-350鍏?鏅氾級",
+    tips:"涔屼鸡鍙ゆ箹鏄柊鐤嗙浜屽ぇ娣℃按婀栥€傞粍閲戞捣宀告櫙鍖洪棬绁ㄧ害45鍏冦€傜娴烽奔鏄壒鑹诧紝涓€瀹氳灏濓紒鍘垮煄閰掑簵閫夋嫨鏈夐檺锛屽缓璁彁鍓嶉璁€? },
+  { day:8, date:"8鏈?鏃?鍛ㄤ簲", type:"drive", title:"绂忔捣 鈫?涔屽皵绂鹃瓟楝煎煄 鈫?鍏嬫媺鐜涗緷", route:"绂忔捣 鈫?鍜屼粈鎵樻礇鐩?鈫?涔屽皵绂?鈫?鍏嬫媺鐜涗緷", drive:"绾?50km", driveTime:"椹鹃┒绾?.5h",
+    highlights:["涓婂崍鍑哄彂锛岀粡鍜屼粈鎵樻礇鐩栧崡涓?,"涓嬪崍鍒拌揪涔屽皵绂鹃瓟楝煎煄","闆呬腹鍦拌矊锛屾棩钀芥椂鍒嗗厜褰辨渶浣?,"鏅尯灏忕伀杞︽父瑙堬紙绾?.5h锛?,"鏅氫笂鎶佃揪鐭虫补涔嬪煄鍏嬫媺鐜涗緷"],
+    food:["鍗堥锛氬拰浠€鎵樻礇鐩栨垨涔屽皵绂?,"鏅氶锛氬厠鎷夌帥渚濆競鍖猴紙鐑よ倝銆佹媽闈級"],
+    hotel:"鍏嬫媺鐜涗緷甯傚尯閰掑簵锛堢害250-400鍏?鏅氾級",
+    tips:"榄旈鍩庢棩钀界害21:30锛堟柊鐤嗘椂闂达級锛屼笅鍗堟櫄浜涜繘鍥渶浣炽€傛櫙鍖烘湁鍖洪棿灏忕伀杞︼紝鍏ㄧ▼绾?.5h銆? },
+  { day:9, date:"8鏈?鏃?鍛ㄥ叚", type:"drive", title:"鍏嬫媺鐜涗緷 鈫?璧涢噷鏈ㄦ箹", route:"鍏嬫媺鐜涗緷 鈫?璧涢噷鏈ㄦ箹", drive:"绾?50km", driveTime:"椹鹃┒绾?.5h锛堥珮閫燂級",
+    highlights:["娌縂30杩為湇楂橀€熶竴璺悜瑗?,"閫旂粡濂庡悲銆佺簿娌?,"涓嬪崍鍒拌揪璧涢噷鏈ㄦ箹鈥斺€斿ぇ瑗挎磱鏈€鍚庝竴婊寸溂娉?,"鐜箹娓歌锛堢害90km鐜箹璺級锛岄殢鏃跺仠杞︽媿鐓?,"婀栬竟鐪嬫棩钀斤紝婀栨按婀涜摑濡傛捣"],
+    food:["鍗堥锛氱簿娌虫垨浜斿彴鏈嶅姟鍖?,"鏅氶锛氳禌婀栭檮杩?鏋滃瓙娌熷啘瀹朵箰锛堥珮鐧介矐楸硷級"],
+    hotel:"璧涙箹鏅尯鍐呮鎴?鎴胯溅钀ュ湴鎴栨灉瀛愭矡/娓呮按娌抽晣锛堢害300-600鍏?鏅氾級",
+    tips:"璧涢噷鏈ㄦ箹娴锋嫈2073m锛屾箹杈归澶э紝甯﹂槻椋庡濂椼€傜幆婀栧缓璁€嗘椂閽堟柟鍚戯紝鍏夌嚎鏇村ソ銆傝嚜椹剧幆婀栭渶鍙︿粯璐圭敤銆? },
+  { day:10, date:"8鏈?鏃?鍛ㄦ棩", type:"drive", title:"璧涢噷鏈ㄦ箹 鈫?鏋滃瓙娌?鈫?浼婂畞", route:"璧涢噷鏈ㄦ箹 鈫?鏋滃瓙娌熷ぇ妗?鈫?浼婂畞", drive:"绾?00km", driveTime:"椹鹃┒绾?h",
+    highlights:["鏃╀笂鍐嶇湅璧涙箹鏅ㄦ櫙","缁忔灉瀛愭矡澶фˉ锛堝场璋烽珮妗ワ紝宸ョ▼濂囪抗锛岃鏅彴鍋滆溅鎷嶇収锛?,"涓嬪崍鍒拌揪浼婂畞","閫涘杸璧炲叾姘戜織鏃呮父鍖猴紙钃濊壊灏忛晣锛岀淮鍚惧皵椋庢儏锛?,"浼婄妬娌冲ぇ妗ョ湅鏃ヨ惤"],
+    food:["鍗堥锛氭灉瀛愭矡鎴栬姦鑽夋矡","鏅氶锛氫紛瀹佸競鍖猴紙鑹惧凹绾抽潰棣嗐€佹墜宸ュ啺娣囨穻锛?],
+    hotel:"浼婂畞甯傚尯閰掑簵锛堢害250-450鍏?鏅氾級",
+    tips:"鏋滃瓙娌熷ぇ妗ユ湁涓撻棬鐨勮鏅彴銆傚杸璧炲叾閫傚悎涓嬪崍鍏夌嚎鏌斿拰鏃舵媿鐓э紝钃濊壊灏忓贩闈炲父鍑虹墖銆? },
+  { day:11, date:"8鏈?鏃?鍛ㄤ竴", type:"drive", title:"浼婂畞 鈫?閭ｆ媺鎻愯崏鍘?, route:"浼婂畞 鈫?閭ｆ媺鎻?, drive:"绾?50km", driveTime:"椹鹃┒绾?.5h",
+    highlights:["娌夸紛鐘佹渤璋蜂笢琛岋紝涓€璺渤璋烽鍏?,"閫旂粡宸╃暀銆佹柊婧?,"涓嬪崍鍒拌揪閭ｆ媺鎻愯崏鍘?,"绌轰腑鑽夊師锛堝潗鍖洪棿杞︿笂灞憋紝瑙嗛噹寮€闃旓級","鑽夊師婕銆侀獞椹€佹媿鐓?],
+    food:["鍗堥锛氭柊婧愬幙鎴栨部閫?,"鏅氶锛氶偅鎷夋彁闀囷紙缇婅倝涓层€佹墜鎶撻キ锛?],
+    hotel:"閭ｆ媺鎻愰晣閰掑簵/姘戝锛堢害300-600鍏?鏅氾級",
+    tips:"閭ｆ媺鎻愬垎绌轰腑鑽夊師鍜屾渤璋疯崏鍘熶袱鍖猴紝浼樺厛閫夌┖涓崏鍘熴€傚尯闂磋溅绾?0-100鍏冦€傛敞鎰忛槻鏅掋€? },
+  { day:12, date:"8鏈?鏃?鍛ㄤ簩", type:"drive", title:"閭ｆ媺鎻?鈫?宸撮煶甯冮瞾鍏?, route:"閭ｆ媺鎻?鈫?宸撮煶甯冮瞾鍏嬶紙鐙簱涓锛?, drive:"绾?00km", driveTime:"椹鹃┒绾?.5h",
+    highlights:["涓婂崍鍙户缁父瑙堥偅鎷夋彁娌宠胺鑽夊師","涓崍杩涘叆鐙簱鍏矾涓鈥斺€旂粷缇庨珮灞辫崏鍘熷叕璺?,"涓嬪崍鍒拌揪宸撮煶甯冮瞾鍏?,"娓歌澶╅箙婀?,"馃寘 閲嶇偣锛氫節鏇插崄鍏集鏃ヨ惤锛堝彲鐪嬪埌9涓お闃冲€掑奖锛?],
+    food:["鍗堥锛氶偅鎷夋彁闀?,"鏅氶锛氬反闊冲竷椴佸厠闀?],
+    hotel:"宸撮煶甯冮瞾鍏嬮晣閰掑簵/钂欏彜鍖咃紙绾?00-500鍏?鏅氾級",
+    tips:"宸撮煶甯冮瞾鍏嬫捣鎷旂害2500m锛屾敞鎰忎繚鏆栥€備節鏇插崄鍏集鏃ヨ惤鏄噸澶存垙锛屾彁鍓嶅崰濂芥満浣嶏紒鏃ヨ惤绾?1:30銆傚尯闂磋溅鍒颁節鏇插崄鍏集绾?0鍒嗛挓銆? },
+  { day:13, date:"8鏈?鏃?鍛ㄤ笁", type:"drive", title:"宸撮煶甯冮瞾鍏?鈫?鐙簱鍏矾 鈫?涔岄瞾鏈ㄩ綈", route:"宸撮煶甯冮瞾鍏?鈫?鐙簱鍖楁 鈫?涔岄瞾鏈ㄩ綈", drive:"绾?50km", driveTime:"椹鹃┒绾?-9h",
+    highlights:["馃寗 鐙簱鍏矾鍖楁鈥斺€斾腑鍥芥渶缇庡叕璺?,"缈昏秺鍝堝笇鍕掓牴杈惧潅锛堟捣鎷?400m锛?,"绌胯秺涔斿皵鐜涖€佺嫭灞卞瓙澶у场璋?,"涓€澶╃粡鍘嗘槬澶忕鍐洓瀛ｆ櫙瑙?,"杈涜嫤浣嗛渿鎾肩殑椹鹃┒鏃?,"鏅氫笂鍥炲埌涔岄瞾鏈ㄩ綈"],
+    food:["鍗堥锛氫箶灏旂帥鎴栫嫭灞卞瓙","鏅氶锛氫箤椴佹湪榻愶紙妤煎叞绉樼儰銆佽绔欏ぇ鐩橀浮锛?],
+    hotel:"涔岄瞾鏈ㄩ綈甯傚尯閰掑簵锛堢害300-500鍏?鏅氾級",
+    tips:"鐙簱鍏矾鍖楁绾?50km锛屽北鍖哄ぉ姘斿鍙橈紝鍙兘閬囧埌闆ㄩ洩銆備箶灏旂帥鐑堝＋绾康棣嗗€煎緱涓€鐪嬨€傚洖涔屽競鍚庤繕杞︺€? },
+  { day:14, date:"8鏈?鏃?鍛ㄥ洓", type:"flight", title:"涔岄瞾鏈ㄩ綈 鈫?鍖椾含", route:"鉁堬笍 椋炶绾?灏忔椂", drive:"鈥?, driveTime:"鈥?,
+    highlights:["涓婂崍閫涘浗闄呭ぇ宸存墡锛堝共鏋溿€佸伐鑹哄搧浼存墜绀硷級","鏂扮枂鍗氱墿棣嗭紙鐪嬫ゼ鍏扮編濂冲共灏革級","鏍规嵁鑸彮鏃堕棿鍓嶅線鏈哄満","椋炲洖鍖椾含锛屾梾绋嬪渾婊＄粨鏉燂紒"],
+    food:["鍗堥锛氬ぇ宸存墡闄勮繎锛堟渶鍚庝竴椤挎柊鐤嗙編椋燂紒锛?],
+    hotel:"鈥?,
+    tips:"杩旂▼鑸彮寤鸿閫変笅鍗堟垨鏅氫笂锛屼笂鍗堟湁鏃堕棿閫涖€傚ぇ宸存墡鍙互璁蹭环銆傚共鏋滄帹鑽愭棤鑺辨灉銆佺孩鏋ｃ€佽憽钀勫共銆佸反鏃︽湪銆? }
+];
+var mapWaypoints = [
+  {day:1,lat:43.907,lon:87.474,label:"涔岄瞾鏈ㄩ綈",type:"start"},
+  {day:2,lat:43.886,lon:88.131,label:"澶╁北澶╂睜"},
+  {day:2,lat:47.221,lon:89.805,label:"鍙彲鎵樻捣"},
+  {day:3,lat:48.573,lon:87.431,label:"绂炬湪"},
+  {day:5,lat:48.817,lon:87.039,label:"鍠€绾虫柉"},
+  {day:7,lat:47.113,lon:87.486,label:"绂忔捣路涔屼鸡鍙ゆ箹"},
+  {day:8,lat:46.077,lon:85.685,label:"榄旈鍩?},
+  {day:8,lat:45.579,lon:84.889,label:"鍏嬫媺鐜涗緷"},
+  {day:9,lat:44.609,lon:81.164,label:"璧涢噷鏈ㄦ箹"},
+  {day:10,lat:43.917,lon:81.323,label:"浼婂畞"},
+  {day:11,lat:43.333,lon:84.018,label:"閭ｆ媺鎻?},
+  {day:12,lat:43.033,lon:84.144,label:"宸撮煶甯冮瞾鍏?},
+  {day:13,lat:44.358,lon:84.848,label:"鐙北瀛?},
+  {day:13,lat:43.907,lon:87.474,label:"涔岄瞾鏈ㄩ綈",type:"end"}
+];
+function renderItinerary(){
+  var el=document.getElementById("content");
+  el.innerHTML='<div class="section-title">馃搮 姣忔棩琛岀▼</div>';
+  itineraryData.forEach(function(d){
+    var cls=d.type==="flight"?"flight":d.type==="stay"?"rest":d.type==="long"?"long":"drive";
+    var icon=d.type==="flight"?"鉁堬笍":d.type==="stay"?"馃槾":"馃殫";
+    var html='<div class="day-card" onclick="toggleDay(this)" data-day="'+d.day+'"><div class="day-header"><div class="day-num '+cls+'">'+icon+'</div><div class="day-info"><div class="date">'+d.date+'</div><div class="title">'+d.title+'</div><div class="route">'+d.route+(d.drive!=="鈥??" 路 "+d.drive:"")+'</div></div><div class="day-arrow">鈻?/div></div><div class="day-body"><div class="info-row">';
+    if(d.drive!=="鈥?)html+='<span class="info-tag drive">馃殫 '+d.drive+'</span>';
+    if(d.driveTime!=="鈥?)html+='<span class="info-tag drive">鈴?'+d.driveTime+'</span>';
+    html+='</div>';
+    if(d.highlights.length){html+='<h4>馃専 浠婃棩浜偣</h4><ul>';d.highlights.forEach(function(h){html+='<li>'+h+'</li>'});html+='</ul>';}
+    if(d.food.length){html+='<h4>馃崪 缇庨鎺ㄨ崘</h4><ul>';d.food.forEach(function(f){html+='<li>'+f+'</li>'});html+='</ul>';}
+    if(d.hotel!=="鈥?)html+='<span class="info-tag hotel">馃彣 '+d.hotel+'</span>';
+    if(d.tips)html+='<div class="highlight">馃挕 '+d.tips+'</div>';
+    html+='</div></div>';
+    el.innerHTML+=html;
+  });
+}
+function toggleDay(card){card.classList.toggle("open")}
+function renderMap(){
+  var el=document.getElementById("content");
+  el.innerHTML='<div class="section-title">馃椇锔?璺嚎鍦板浘</div><div id="map-view"><div class="map-fallback"><div class="icon">馃椇锔?/div><div class="title">鍦板浘闇€瑕佺綉缁滆繛鎺?/div><div class="desc">琛岀▼銆佹敾鐣ャ€侀绠楀彲绂荤嚎鏌ョ湅</div></div></div><div style="padding:0 4px"><p style="font-size:13px;color:#6b5e4e;line-height:1.7">涔岄瞾鏈ㄩ綈 鈫?澶╁北澶╂睜 鈫?鍙彲鎵樻捣 鈫?绂炬湪 鈫?鍠€绾虫柉 鈫?绂忔捣锛堜箤浼﹀彜婀栵級鈫?榄旈鍩?鈫?璧涢噷鏈ㄦ箹 鈫?鏋滃瓙娌?鈫?浼婂畞 鈫?閭ｆ媺鎻?鈫?宸撮煶甯冮瞾鍏?鈫?鐙簱鍏矾 鈫?涔岄瞾鏈ㄩ綈銆?/p></div>';
+  setTimeout(function(){
+    if(typeof L==="undefined")return;
+    var mv=document.getElementById("map-view");
+    mv.innerHTML="";
+    mv.style.cssText="";
+    var map=L.map("map-view").setView([45.5,85.0],6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:'&copy; OpenStreetMap',maxZoom:15}).addTo(map);
+    var latlngs=[];
+    mapWaypoints.forEach(function(wp){
+      var m=L.marker([wp.lat,wp.lon]).addTo(map);
+      var d=itineraryData.find(function(dd){return dd.day===wp.day})||{title:wp.label};
+      m.bindPopup("<strong>Day"+wp.day+"</strong><br>"+wp.label+"<br><small>"+(d.title||"")+"</small>");
+      latlngs.push([wp.lat,wp.lon]);
+    });
+    L.polyline(latlngs,{color:"#2d5a3f",weight:3,opacity:.7,dashArray:"8,6"}).addTo(map);
+    setTimeout(function(){map.invalidateSize()},200);
+  },300);
+}
+function renderTips(){
+  var el=document.getElementById("content");
+  el.innerHTML='<div class="section-title">馃搵 瀹炵敤鏀荤暐</div>'+
+'<div class="tips-card"><h3><span class="icon">馃尋锔?/span>澶╂皵涓庣┛琛?/h3><ul><li>鍖楃枂7-8鏈堢櫧澶?5-35掳C锛屽鏅氬北鍖?0-15掳C</li><li>涔岄瞾鏈ㄩ綈/鍏嬫媺鐜涗緷鍋忕儹锛屽杸绾虫柉/宸撮煶甯冮瞾鍏嬫棭鏅氶渶澶栧</li><li>蹇呭锛氱煭琚?闀胯￥+闃叉檼琛?鎶撶粧琛?闃查澶栧锛堝啿閿嬭。鏈€浣筹級</li><li>甯藉瓙銆佸ⅷ闀溿€侀槻鏅掗湝锛堢传澶栫嚎寰堝己锛侊級</li><li>鑸掗€傜殑寰掓闉?杩愬姩闉?/li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">馃殫</span>鑷┚娉ㄦ剰浜嬮」</h3><ul><li>绉熻溅寤鸿SUV锛堝潶鍏?00/RAV4/濂囬獜锛夛紝绾?00-500鍏?澶?/li><li>鏂扮枂鍔犳补绔欓渶鍒疯韩浠借瘉+浜鸿劯璇嗗埆锛岀敱鍔犳补鍛樻搷浣?/li><li>鐙簱鍏矾7搴т互涓嬭溅杈嗗彲閫氳锛屾敞鎰忛檺琛屾椂闂?/li><li>灞卞尯璺娉ㄦ剰钀界煶銆佺墰缇婃í绌?/li><li>鎻愬墠涓嬭浇绂荤嚎鍦板浘锛堟柊鐤嗛儴鍒嗚矾娈垫棤淇″彿锛?/li><li>鍚庡绠卞姘村拰骞茬伯锛屾湁浜涜矾娈垫湇鍔″尯灏?/li><li>甯冨皵娲ユ槸鍠€绾虫柉鍦板尯鏈€鍚庝竴涓ぇ琛ョ粰绔欙紝鍗椾笅鏃惰寰楀姞娌?/li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">馃摑</span>蹇呭璇佷欢</h3><ul><li>韬唤璇侊紙鏂扮枂瀹夋澶氾紝闅忚韩鎼哄甫锛侊級</li><li>椹鹃┒璇?琛岄┒璇侊紙绉熻溅鐢級</li><li>灏戦噺鐜伴噾锛堟湁浜涚墽鍖哄彧鏀剁幇閲戯級</li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">馃彅锔?/span>鏅偣闂ㄧエ鍙傝€?/h3><ul><li>澶╁北澶╂睜锛氶棬绁?鍖洪棿杞︾害155鍏?/li><li>鍙彲鎵樻捣锛氶棬绁?鍖洪棿杞︾害126鍏?/li><li>绂炬湪鏉戯細闂ㄧエ+鍖洪棿杞︾害102鍏?/li><li>鍠€绾虫柉锛氶棬绁?鍖洪棿杞︾害230鍏冿紝瑙傞奔鍙板彟绾?0鍏?/li><li>涔屼鸡鍙ゆ箹榛勯噾娴峰哺锛氱害45鍏?/li><li>涔屽皵绂鹃瓟楝煎煄锛氶棬绁?灏忕伀杞︾害62鍏?/li><li>璧涢噷鏈ㄦ箹锛氶棬绁ㄧ害70鍏冿紝鑷┚鐜箹鍙︽敹璐?/li><li>閭ｆ媺鎻愶細闂ㄧエ+鍖洪棿杞︾害135鍏冿紙绌轰腑鑽夊師锛?/li><li>宸撮煶甯冮瞾鍏嬶細闂ㄧエ+鍖洪棿杞︾害140鍏?/li><li>鐙簱鍏矾锛氬厤璐癸紙鏈€缇庡叕璺灉鐒跺厤璐桂煒勶級</li></ul></div>'+
+'<div class="tips-card"><h3><span class="icon">馃摫</span>瀹炵敤APP</h3><ul><li>楂樺痉/鐧惧害鍦板浘锛堟彁鍓嶄笅杞芥柊鐤嗙绾垮湴鍥惧寘锛?/li><li>鎼虹▼/鍘诲摢鍎匡紙閰掑簵銆侀棬绁ㄩ璁級</li><li>涓€鍡ㄧ杞?绁炲窞绉熻溅</li><li>澶т紬鐐硅瘎锛堟壘缇庨锛?/li><li>灏忕孩涔︼紙鏌ユ渶鏂版敾鐣ャ€佽矾鍐碉級</li></ul></div>';
+}
+function renderBudget(){
+  var el=document.getElementById("content");
+  var items=[
+    ["鉁堬笍 寰€杩旀満绁紙鍖椾含-涔岄瞾鏈ㄩ綈锛?,"2浜?脳 ~3000鍏?,"6,000"],
+    ["馃殫 绉熻溅锛圫UV锛?2澶╋級","12澶?脳 ~400鍏?澶?,"4,800"],
+    ["鉀?娌硅垂","~3400km 梅 100 脳 10L 脳 8鍏?,"2,720"],
+    ["馃洠锔?杩囪矾璐?,"楂橀€?鍥介亾","~900"],
+    ["馃彣 浣忓锛?3鏅氾級","13鏅?脳 ~350鍏?,"4,550"],
+    ["馃帿 鏅偣闂ㄧエ锛?浜猴級","绾?0涓櫙鐐?,"~3,800"],
+    ["馃崪 椁愰ギ","14澶?脳 2浜?脳 ~150鍏?,"4,200"],
+    ["馃吙锔?鍋滆溅+鍖洪棿杞︾瓑鏉傝垂","","~1,000"],
+    ["馃摫 鍏朵粬锛堥浂椋熴€佺邯蹇靛搧绛夛級","","~2,000"]
+  ];
+  var total=0;
+  var html='<div class="section-title">馃挵 棰勭畻浼扮畻</div><div class="tips-card"><table class="budget-table">';
+  items.forEach(function(item){
+    html+='<tr><td>'+item[0]+'</td><td style="font-size:11px;color:#9b8c7a">'+item[1]+'</td><td>楼'+item[2]+'</td></tr>';
+    total+=parseInt(item[2].replace(/,/g,""));
+  });
+  html+='<tr class="total"><td colspan="2">鍚堣锛?浜猴級</td><td>楼'+total.toLocaleString()+'</td></tr>';
+  html+='</table><p style="font-size:12px;color:#9b8c7a;margin-top:8px">*浠ヤ笂涓轰袱浜哄嚭琛屼及绠楋紝瀹為檯鑺辫垂鍥犲鑺傘€侀厭搴楁。娆°€佺杞﹁溅鍨嬩笉鍚岃€屾湁娴姩銆備汉鍧囩害15,000鍏冨乏鍙炽€?/p></div>';
+  el.innerHTML=html;
+}
+function switchTab(tabName){
+  var tabs=document.querySelectorAll(".tab");
+  for(var i=0;i<tabs.length;i++)tabs[i].classList.remove("active");
+  document.querySelector('[data-tab="'+tabName+'"]').classList.add("active");
+  document.getElementById("content").innerHTML="";
+  if(tabName==="itinerary")renderItinerary();
+  else if(tabName==="map")renderMap();
+  else if(tabName==="tips")renderTips();
+  else if(tabName==="budget")renderBudget();
+}
+(function(){
+  var tabs=document.querySelectorAll(".tab");
+  for(var i=0;i<tabs.length;i++)tabs[i].addEventListener("click",function(){switchTab(this.dataset.tab)});
+})();
+renderItinerary();
+</script>
+</body>
+</html>
